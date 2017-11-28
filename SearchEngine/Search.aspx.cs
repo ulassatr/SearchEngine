@@ -21,36 +21,11 @@ namespace SearchEngine
         protected void SearchButton_Click(object sender, EventArgs e)
         {
             string url = UrlText.Text;
-            ServicePointManager.Expect100Continue = true;
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-
-            var client = new WebClient { Encoding = System.Text.Encoding.UTF8 };
-
-            String htmlz = client.DownloadString(url);
-
-            String html = HttpUtility.HtmlDecode(htmlz).ToString();
-
-            HtmlAgilityPack.HtmlDocument dokuman = new HtmlAgilityPack.HtmlDocument();
-            dokuman.LoadHtml(html);
-            string htmlSon = dokuman.ToString();
+            Htmlİslemleri Cek_veri = new Htmlİslemleri();
+            string html = Cek_veri.GetVeri(url);
 
             //HtmlNodeCollection basliklar = dokuman.DocumentNode.SelectNodes("//li[@class='post-listing-list-item__post post-listing-list-item__post--featured']");
-
-            int sayac = 0;
-            
-            string metin = html;
-            
-            string kelime = KeyText.Text;
-            
-            int konum = metin.IndexOf(kelime);
-            
-            while (konum != -1)
-            {
-                konum = metin.IndexOf(kelime, konum + 1);
-
-                sayac++;
-                
-            }
+            int KeyCount=Cek_veri.FindWord(html, KeyText.Text);
 
         }
     }
