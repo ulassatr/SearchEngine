@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SearchEngine
 {
-    public class Htmlİslemleri
+    public class Htmlİslemleri 
     {
 
         public string GetVeri(string url)
