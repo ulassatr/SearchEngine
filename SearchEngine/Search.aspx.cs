@@ -9,6 +9,8 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using HtmlAgilityPack;
+using SearchEngine.TagsFolder;
+
 namespace SearchEngine
 {
     public partial class Search : System.Web.UI.Page
@@ -30,44 +32,13 @@ namespace SearchEngine
 
 
             Title title = new Title();
-            int y=  title.TagsKelimeSayisi(html, arananKelime, Cek_veri, title.etiket);
+            ahref ahref = new ahref();
+            h1 h1 = new h1();
 
-         
+            int title_KeSay=  title.TagsKelimeSayisi(html, arananKelime, Cek_veri, title.etiket);
+            int ahref_KeSay = ahref.TagsKelimeSayisi(html, arananKelime, Cek_veri, ahref.etiket);
+            int h1_KeSay = h1.TagsKelimeSayisi(html, arananKelime, Cek_veri, h1.etiket);
 
-
-            //for (int i = 0; i < liste.Count; i++)
-            //{
-            //    string[i] y = liste[i].ToString();
-            //    y[i].ToLower();
-            //}
-            
-
-            //int sayac = 0;
-            //for (int i = 0; i < h1.Length; i++)
-            //{
-
-            //    int a = h1[i].IndexOf(aranankelime);
-            //    if (a == -1)
-            //    {
-            //        continue;
-            //    }
-            //    else
-            //        while (a != -1)
-            //        {
-            //            a = h1[i].IndexOf(aranankelime, a + 1);
-            //            sayac++;
-            //        }
-            //}
-
-            //int a = y.IndexOf(arananKelime);
-            //int sayac = 0;
-            //while (a != -1)
-            //{
-            //     a= liste.IndexOf(arananKelime,a+1);
-
-            //    sayac++;
-
-            //}
             int KeyCount=Cek_veri.FindWord(html,arananKelime);
             
         }

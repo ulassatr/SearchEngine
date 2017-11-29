@@ -82,6 +82,21 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TagsFolder\ahref.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h1.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h2.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h3.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Head.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Htmlİslemleri.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Search.aspx.cs">
@@ -91,10 +106,13 @@
     <Compile Include="Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Tags.cs">
+    <Compile Include="TagsFolder\Link.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Title.cs">
+    <Compile Include="TagsFolder\Tags.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Title.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>
