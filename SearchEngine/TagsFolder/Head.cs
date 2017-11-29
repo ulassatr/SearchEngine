@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SearchEngine
 {
-    public class Head : Tags
+    public class Head : UrlPuan
     {
         public string etiket = "//head";
     }

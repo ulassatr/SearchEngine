@@ -85,6 +85,15 @@
     <Compile Include="TagsFolder\ahref.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="TagsFolder\Big.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Bold.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Em.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="TagsFolder\h1.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -92,6 +101,15 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TagsFolder\h3.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h4.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h5.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\h6.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TagsFolder\Head.cs">
@@ -106,13 +124,31 @@
     <Compile Include="Search.aspx.designer.cs">
       <DependentUpon>Search.aspx</DependentUpon>
     </Compile>
+    <Compile Include="TagsFolder\LabelHtml.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Li.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="TagsFolder\Link.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TagsFolder\Tags.cs">
+    <Compile Include="TagsFolder\Option.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Span.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Strong.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TagsFolder\Th.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TagsFolder\Title.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UrlPuan.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
   </ItemGroup>

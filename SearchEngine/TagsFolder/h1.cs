@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SearchEngine.TagsFolder
 {
-    public class h1 : Tags
+    public class h1 : UrlPuan
     {
         public string etiket = "//h1";
     }

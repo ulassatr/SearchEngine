@@ -5,8 +5,8 @@ using System.Web;
 
 namespace SearchEngine.TagsFolder
 {
-    public class Link : Tags    
+    public class Link : UrlPuan    
     {
-        public string etiket = "//li";
+        public string etiket = "//link";
     }
 }
