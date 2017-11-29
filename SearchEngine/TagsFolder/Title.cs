@@ -11,6 +11,7 @@ namespace SearchEngine
     public class Title : UrlPuan
     {
         public string etiket = "//title";
+        public double puan = 9.9;
 
     }
 }

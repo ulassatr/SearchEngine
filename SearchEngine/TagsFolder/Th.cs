@@ -8,5 +8,6 @@ namespace SearchEngine.TagsFolder
     public class Th : UrlPuan
     {
         public string etiket = "//th";
+        public double puan = 2;
     }
 }

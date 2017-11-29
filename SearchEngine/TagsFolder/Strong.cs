@@ -8,5 +8,6 @@ namespace SearchEngine.TagsFolder
     public class Strong : UrlPuan
     {
         public string etiket = "//strong";
+        public double puan = 3.9;
     }
 }

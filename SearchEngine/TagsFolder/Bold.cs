@@ -8,5 +8,6 @@ namespace SearchEngine.TagsFolder
     public class Bold : UrlPuan
     {
         public string etiket = "//bold";
+        public double puan = 3.9;
     }
 }

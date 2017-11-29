@@ -8,5 +8,6 @@ namespace SearchEngine
     public class Head : UrlPuan
     {
         public string etiket = "//head";
+        public double puan = 10;
     }
 }

@@ -10,55 +10,41 @@ namespace SearchEngine
 {
     public class UrlPuan : Search
     {
-        Title title = new Title();
-        ahref ahref = new ahref();
-        h1 h1 = new h1();
-        h2 h2 = new h2();
-        h3 h3 = new h3();
-        h4 h4 = new h4();
-        h5 h5 = new h5();
-        h6 h6 = new h6();
-        Head head = new Head();
-        LabelHtml labelHtml = new LabelHtml();
-        Link link = new Link();
-        Span span = new Span();
-        Strong strong = new Strong();
-        Big big = new Big();
-        Bold bold = new Bold();
-        Em em = new Em();
-        Li li = new Li();
-        Option option = new Option();
-        Th th = new Th();
-               
 
-        public int TagsKelimeSayisi(string html, string aranankelime, Htmlİslemleri Cek_veri, string etiket,int puan)
+        public double sıralamaPuan(string html, string aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan)
         {
-            int Toplam_puan = 0;
+  
+            double Toplam_puan = 0;
             HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
             htmldoc.LoadHtml(html);
             aranankelime.ToLower();
             HtmlNodeCollection basliklar = htmldoc.DocumentNode.SelectNodes(etiket);
             List<string> liste = new List<string>();
-            foreach (var baslik in basliklar)
+            if (basliklar != null)
             {
-                liste.Add(baslik.InnerText);
+                foreach (var baslik in basliklar)
+                {
+                    liste.Add(baslik.InnerText);
+                }
+                double y;
+                string[] stringDizi = new string[liste.Count];
+
+                for (int i = 0; i < liste.Count; i++)
+                {
+                    stringDizi[i] = liste[i].ToString();
+                }
+
+                string tekstring;
+                tekstring = ConvertStringArrayToString(stringDizi);
+                tekstring = tekstring.ToLower();
+                y = Cek_veri.FindWord(tekstring, aranankelime);
+                if (y > 20)
+                {
+                    y = y / 6;
+                }
+                return Toplam_puan = puan * y;
             }
-            int y;
-            string[] stringDizi = new string[liste.Count];
-
-            for (int i = 0; i < liste.Count; i++)
-            {
-                stringDizi[i] = liste[i].ToString();
-            }
-
-            string tekstring;
-            tekstring = ConvertStringArrayToString(stringDizi);
-            tekstring = tekstring.ToLower();
-
-            y = Cek_veri.FindWord(tekstring, aranankelime);
-
-            return Toplam_puan=puan*y;
-
+            return Toplam_puan=0;
         }
         public string ConvertStringArrayToString(string[] array)
         {
@@ -75,32 +61,57 @@ namespace SearchEngine
             }
             return builder.ToString();
         }
-        
-        public int PuanHesapla(string html, string arananKelime, Htmlİslemleri Cek_veri, string etiket,int puan)
-        {
-            int title_KeSay = title.TagsKelimeSayisi(html, arananKelime, Cek_veri, title.etiket);
-            int ahref_KeSay = ahref.TagsKelimeSayisi(html, arananKelime, Cek_veri, ahref.etiket,ahref.puan);
-            int h1_KeSay = h1.TagsKelimeSayisi(html, arananKelime, Cek_veri, h1.etiket);
-            int h2_KeSay = h2.TagsKelimeSayisi(html, arananKelime, Cek_veri, h2.etiket);
-            int h3_KeSay = h3.TagsKelimeSayisi(html, arananKelime, Cek_veri, h3.etiket);
-            int h4_KeSay = h4.TagsKelimeSayisi(html, arananKelime, Cek_veri, h4.etiket);
-            int h5_KeSay = h5.TagsKelimeSayisi(html, arananKelime, Cek_veri, h5.etiket);
-            int h6_KeSay = h6.TagsKelimeSayisi(html, arananKelime, Cek_veri, h6.etiket);
-            int Strong_KeSay = strong.TagsKelimeSayisi(html, arananKelime, Cek_veri, strong.etiket);
-            int Bold_Kesay= bold.TagsKelimeSayisi(html, arananKelime, Cek_veri, bold.etiket);
-            int Em_Kesay = em.TagsKelimeSayisi(html, arananKelime, Cek_veri, em.etiket);
-            int Head_Kesay = head.TagsKelimeSayisi(html, arananKelime, Cek_veri, head.etiket);
-            int Label_Kesay = labelHtml.TagsKelimeSayisi(html, arananKelime, Cek_veri, labelHtml.etiket);
-            int Li_Kesay = li.TagsKelimeSayisi(html, arananKelime, Cek_veri, li.etiket);
-            int Link_Kesay = link.TagsKelimeSayisi(html, arananKelime, Cek_veri, link.etiket);
-            int Options_Kesay = option.TagsKelimeSayisi(html, arananKelime, Cek_veri, option.etiket);
-            int Span_Kesay = span.TagsKelimeSayisi(html, arananKelime, Cek_veri, span.etiket);
-            int Th_Kesay = th.TagsKelimeSayisi(html, arananKelime, Cek_veri, th.etiket);
-            
 
+        public double PuanHesapla(string html, string arananKelime, Htmlİslemleri Cek_veri)
+        {
+            double toplamPuan;
+
+            Title title = new Title();
+            ahref ahref = new ahref();
+            h1 h1 = new h1();
+            h2 h2 = new h2();
+            h3 h3 = new h3();
+            h4 h4 = new h4();
+            h5 h5 = new h5();
+            h6 h6 = new h6();
+            Head head = new Head();
+            LabelHtml labelHtml = new LabelHtml();
+            Link link = new Link();
+            Span span = new Span();
+            Strong strong = new Strong();
+            Big big = new Big();
+            Bold bold = new Bold();
+            Em em = new Em();
+            Li li = new Li();
+            Option option = new Option();
+            Th th = new Th();
+            UrlPuan urlpuan = new UrlPuan();
+
+
+
+            double title_Puan = title.sıralamaPuan(html, arananKelime, Cek_veri, title.etiket, title.puan);
+            double ahref_Puan = ahref.sıralamaPuan(html, arananKelime, Cek_veri, ahref.etiket, ahref.puan);
+            double h1_Puan = h1.sıralamaPuan(html, arananKelime, Cek_veri, h1.etiket, h1.puan);
+            double h2_Puan = h2.sıralamaPuan(html, arananKelime, Cek_veri, h2.etiket, h2.puan);
+            double h3_Puan = h3.sıralamaPuan(html, arananKelime, Cek_veri, h3.etiket, h3.puan);
+            double h4_Puan = h4.sıralamaPuan(html, arananKelime, Cek_veri, h4.etiket, h4.puan);
+            double h5_Puan = h5.sıralamaPuan(html, arananKelime, Cek_veri, h5.etiket, h5.puan);
+            double h6_Puan = h6.sıralamaPuan(html, arananKelime, Cek_veri, h6.etiket, h6.puan);
+            double Strong_Puan = strong.sıralamaPuan(html, arananKelime, Cek_veri, strong.etiket, strong.puan);
+            double bold_Puan = bold.sıralamaPuan(html, arananKelime, Cek_veri, bold.etiket, bold.puan);
+            double em_Puan = em.sıralamaPuan(html, arananKelime, Cek_veri, em.etiket, em.puan);
+            double head_Puan = head.sıralamaPuan(html, arananKelime, Cek_veri, head.etiket, head.puan);
+            double label_Puan = labelHtml.sıralamaPuan(html, arananKelime, Cek_veri, labelHtml.etiket, labelHtml.puan);
+            double li_Puan = li.sıralamaPuan(html, arananKelime, Cek_veri, li.etiket, li.puan);
+            double link_Puan = link.sıralamaPuan(html, arananKelime, Cek_veri, link.etiket, link.puan);
+            double options_Puan = option.sıralamaPuan(html, arananKelime, Cek_veri, option.etiket, option.puan);
+            double span_Puan = span.sıralamaPuan(html, arananKelime, Cek_veri, span.etiket, span.puan);
+            double th_Puan = th.sıralamaPuan(html, arananKelime, Cek_veri, th.etiket, th.puan);
+            toplamPuan =title_Puan + h1_Puan + h2_Puan + h4_Puan + h3_Puan + h5_Puan + h6_Puan  +Strong_Puan+ bold_Puan + em_Puan + head_Puan + label_Puan + li_Puan + link_Puan + options_Puan + span_Puan + th_Puan;
+            return toplamPuan;
         }
 
-        
+
 
     }
 }
