@@ -6,7 +6,7 @@ using System.Text;
 using System.Web;
 
 
-namespace SearchEngine
+namespace SearchEngine.TagsFolder
 {
     public class Title : UrlPuan
     {
