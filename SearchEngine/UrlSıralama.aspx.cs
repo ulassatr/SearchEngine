@@ -32,7 +32,7 @@ namespace SearchEngine
                 url_list.Add(url_kumesi[i]);
 
             }
-            string[] kelime_kumesi = UrlText.Text.Split(',');
+            string[] kelime_kumesi = KelimeText.Text.Split(',');
 
             for (int i = 0; i < kelime_kumesi.Count(); i++)
             {
@@ -43,10 +43,8 @@ namespace SearchEngine
             List<int> list = new List<int>();
             UrlPuan url_puan = new UrlPuan();
 
-
-
-
         }
+        /*
         public double sıralamaPuan(List<string> html, List<string> aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan)
         {
 
@@ -96,6 +94,7 @@ namespace SearchEngine
             }
             Toplam_puan = 0;
         }
+        */
         public string ConvertStringArrayToString(string[] array)
         {
             //

@@ -8,13 +8,14 @@ using System.Text;
 
 namespace SearchEngine
 {
-    public class UrlPuan 
+    public class UrlPuan
     {
 
         public double sıralamaPuan(string html, string aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan)
         {
-  
+
             double Toplam_puan = 0;
+
             HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
             htmldoc.LoadHtml(html);
             aranankelime.ToLower();
@@ -44,7 +45,37 @@ namespace SearchEngine
                 }
                 return Toplam_puan = puan * y;
             }
-            return Toplam_puan=0;
+            return Toplam_puan = 0;
+        }
+        public int kelimeSayisi(string html, string aranankelime, Htmlİslemleri Cek_veri, string etiket)
+        {
+
+            HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
+            htmldoc.LoadHtml(html);
+            aranankelime.ToLower();
+            HtmlNodeCollection basliklar = htmldoc.DocumentNode.SelectNodes(etiket);
+            List<string> liste = new List<string>();
+            if (basliklar != null)
+            {
+                foreach (var baslik in basliklar)
+                {
+                    liste.Add(baslik.InnerText);
+                }
+                int y;
+                string[] stringDizi = new string[liste.Count];
+
+                for (int i = 0; i < liste.Count; i++)
+                {
+                    stringDizi[i] = liste[i].ToString();
+                }
+
+                string tekstring;
+                tekstring = ConvertStringArrayToString(stringDizi);
+                tekstring = tekstring.ToLower();
+                y = Cek_veri.FindWord(tekstring, aranankelime);
+                return y;
+            }
+            return 0;
         }
         public string ConvertStringArrayToString(string[] array)
         {
@@ -107,7 +138,7 @@ namespace SearchEngine
             double options_Puan = option.sıralamaPuan(html, arananKelime, Cek_veri, option.etiket, option.puan);
             double span_Puan = span.sıralamaPuan(html, arananKelime, Cek_veri, span.etiket, span.puan);
             double th_Puan = th.sıralamaPuan(html, arananKelime, Cek_veri, th.etiket, th.puan);
-            toplamPuan =title_Puan + h1_Puan + h2_Puan + h4_Puan + h3_Puan + h5_Puan + h6_Puan  +Strong_Puan+ bold_Puan + em_Puan + head_Puan + label_Puan + li_Puan + link_Puan + options_Puan + span_Puan + th_Puan;
+            toplamPuan = title_Puan + h1_Puan + h2_Puan + h4_Puan + h3_Puan + h5_Puan + h6_Puan + Strong_Puan + bold_Puan + em_Puan + head_Puan + label_Puan + li_Puan + link_Puan + options_Puan + span_Puan + th_Puan;
             return toplamPuan;
         }
 

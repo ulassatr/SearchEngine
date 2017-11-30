@@ -107,6 +107,7 @@
     <Compile Include="TagsFolder\Li.cs" />
     <Compile Include="TagsFolder\Link.cs" />
     <Compile Include="TagsFolder\Option.cs" />
+    <Compile Include="TagsFolder\p.cs" />
     <Compile Include="TagsFolder\Span.cs" />
     <Compile Include="TagsFolder\Strong.cs" />
     <Compile Include="TagsFolder\Th.cs" />
