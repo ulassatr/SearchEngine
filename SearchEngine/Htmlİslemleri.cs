@@ -23,6 +23,26 @@ namespace SearchEngine
             return html;
            
         }
+
+
+        public List<string> GetVeri(List<string> url)
+        {
+            ServicePointManager.Expect100Continue = true;
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            List<string> html_List = new List<string>();
+            var client = new WebClient { Encoding = System.Text.Encoding.UTF8 };
+            for (int i = 0; i < url.Count; i++)
+            {
+                String htmlz = client.DownloadString(url[i]);
+              string  html= HttpUtility.HtmlDecode(htmlz).ToString();
+                html_List.Add(html);
+
+            }
+            return html_List;
+        }
+
+
+
         public int FindWord(string metin,string kelime)
         {
             int sayac = 0;
