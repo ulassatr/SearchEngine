@@ -7,12 +7,12 @@ using HtmlAgilityPack;
 using System.Text;
 namespace SearchEngine
 {
-    public class UrlPuan:UrlSıralama
+    public class UrlPuan : UrlSıralama
     {
 
 
 
-              
+
         public int kelimeSayisi(string html, string aranankelime, Htmlİslemleri Cek_veri, string etiket)
         {
 
@@ -58,41 +58,62 @@ namespace SearchEngine
             }
             return builder.ToString();
         }
-        public List<double> sıralamaPuan(List<string> url, List<string> aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan,HtmlAgilityPack.HtmlDocument htmldoc)
+        public List<double> sıralamaPuan(List<string> url, List<string> aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan, HtmlAgilityPack.HtmlDocument htmldoc)
         {
 
             List<double> etiketPuan = new List<double>();
+            double anlikPuan = 0;
 
+            HtmlNodeCollection basliklar = htmldoc.DocumentNode.SelectNodes(etiket);
+            for (int j = 0; j < aranankelime.Count; j++)
+            {
 
-                              HtmlNodeCollection basliklar = htmldoc.DocumentNode.SelectNodes(etiket);
-                for (int j = 0; j < aranankelime.Count; j++)
+                aranankelime[j].ToLower();
+                List<string> liste = new List<string>();
+                if (basliklar != null)
                 {
-
-                    aranankelime[j].ToLower();
-                    List<string> liste = new List<string>();
-                    if (basliklar != null)
+                    foreach (var baslik in basliklar)
                     {
-                        foreach (var baslik in basliklar)
-                        {
-                            liste.Add(baslik.InnerText);
-                        }
-                        double kelimeSayisi;
-                        string[] stringDizi = new string[liste.Count];
-
-                        for (int k = 0; k < liste.Count; k++)
-                        {
-                            stringDizi[k] = liste[k].ToString();
-                        }
-
-                        string tekstring;
-                        tekstring = ConvertStringArrayToString(stringDizi);
-                        tekstring = tekstring.ToLower();
-                        kelimeSayisi = Cek_veri.FindWord(tekstring, aranankelime[j]);
-                        etiketPuan.Add(kelimeSayisi * puan);
+                        liste.Add(baslik.InnerText);
                     }
-                    else
-                        continue;
-                }       
+                    double kelimeSayisi;
+                    string[] stringDizi = new string[liste.Count];
+
+                    for (int k = 0; k < liste.Count; k++)
+                    {
+                        stringDizi[k] = liste[k].ToString();
+                    }
+
+                    string tekstring;
+                    tekstring = ConvertStringArrayToString(stringDizi);
+                    tekstring = tekstring.ToLower();
+                    kelimeSayisi = Cek_veri.FindWord(tekstring, aranankelime[j]);
+
+
+
+                    if (kelimeSayisi>50)
+                    {
+                        kelimeSayisi = kelimeSayisi / 5;
+                    }
+                    else if (kelimeSayisi > 40)
+                    {
+                        kelimeSayisi = kelimeSayisi / 4;
+                    }
+                    else if (kelimeSayisi > 30)
+                    {
+                        kelimeSayisi = kelimeSayisi / 3;
+                    }
+                    else if (kelimeSayisi > 20)
+                    {
+                        kelimeSayisi = kelimeSayisi / 2;
+                    }
+                    anlikPuan = kelimeSayisi * puan;
+              
+                    etiketPuan.Add(anlikPuan);
+                }
+                else
+                    continue;
+            }
             return etiketPuan;
 
         }

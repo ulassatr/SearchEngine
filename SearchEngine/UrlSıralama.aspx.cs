@@ -41,11 +41,7 @@ namespace SearchEngine
 
             }
 
-            Htmlİslemleri Cek_veri = new Htmlİslemleri();
-            string htmlstring;
-            htmlstring = Cek_veri.GetVeri(url_list[0]);
-            HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
-            htmldoc.LoadHtml(htmlstring);
+
 
             Title title = new Title();
             ahref a = new ahref();
@@ -94,106 +90,142 @@ namespace SearchEngine
             Th th = new Th();
             LabelHtml labelhtml = new LabelHtml();
 
-            title_Puan = title.sıralamaPuan(url_list, kelime_list, Cek_veri, title.etiket, title.puan, htmldoc);
-            ahref_Puan = ahref.sıralamaPuan(url_list, kelime_list, Cek_veri, ahref.etiket, ahref.puan, htmldoc);
-            h1_Puan = h1.sıralamaPuan(url_list, kelime_list, Cek_veri, h1.etiket, h1.puan, htmldoc);
-            h2_Puan = h2.sıralamaPuan(url_list, kelime_list, Cek_veri, h2.etiket, h2.puan, htmldoc);
-            h3_Puan = h3.sıralamaPuan(url_list, kelime_list, Cek_veri, h3.etiket, h3.puan, htmldoc);
-            h4_Puan = h4.sıralamaPuan(url_list, kelime_list, Cek_veri, h4.etiket, h4.puan, htmldoc);
-            h5_Puan = h5.sıralamaPuan(url_list, kelime_list, Cek_veri, h5.etiket, h5.puan, htmldoc);
-            h6_Puan = h6.sıralamaPuan(url_list, kelime_list, Cek_veri, h6.etiket, h6.puan, htmldoc);
-            strong_Puan = strong.sıralamaPuan(url_list, kelime_list, Cek_veri, strong.etiket, strong.puan, htmldoc);
-            bold_Puan = bold.sıralamaPuan(url_list, kelime_list, Cek_veri, bold.etiket, bold.puan, htmldoc);
-            em_Puan = em.sıralamaPuan(url_list, kelime_list, Cek_veri, em.etiket, em.puan, htmldoc);
-            head_Puan = head.sıralamaPuan(url_list, kelime_list, Cek_veri, head.etiket, head.puan, htmldoc);
-            label_Puan = labelhtml.sıralamaPuan(url_list, kelime_list, Cek_veri, labelhtml.etiket, labelhtml.puan, htmldoc);
-            li_Puan = li.sıralamaPuan(url_list, kelime_list, Cek_veri, li.etiket, li.puan, htmldoc);
-            link_Puan = link.sıralamaPuan(url_list, kelime_list, Cek_veri, link.etiket, link.puan, htmldoc);
-            option_Puan = option.sıralamaPuan(url_list, kelime_list, Cek_veri, option.etiket, option.puan, htmldoc);
-            span_Puan = span.sıralamaPuan(url_list, kelime_list, Cek_veri, span.etiket, span.puan, htmldoc);
-            th_Puan = th.sıralamaPuan(url_list, kelime_list, Cek_veri, th.etiket, th.puan, htmldoc);
+
+            Htmlİslemleri Cek_veri = new Htmlİslemleri();
+            string htmlstring;
+            List<int> kelimeSayilari = new List<int>();
+            int KeyCount = 0;
+            List<double> standartSapmaListesi = new List<double>();
+            double standartSapma;
             List<double> URLpuan = new List<double>();
             double tekUrlPuan = 0;
-            for (int i = 0; i < kelime_list.Count; i++)
+            for (int j = 0; j < url_list.Count; j++)
             {
-                tekUrlPuan = 0;
-                if (ahref_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + ahref_Puan[i];
-                }
-                if (title_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + title_Puan[i];
-                }
-                if (h1_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h1_Puan[i];
-                }
-                if (h2_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h2_Puan[i];
-                }
-                if (h3_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h3_Puan[i];
-                }
-                if (h4_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h4_Puan[i];
-                }
-                if (h5_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h5_Puan[i];
-                }
-                if (h6_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + h6_Puan[i];
-                }
-                if (strong_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + strong_Puan[i];
-                }
-                if (bold_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + bold_Puan[i];
-                }
-                if (head_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + head_Puan[i];
-                }
-                if (label_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + label_Puan[i];
-                }
-                if (li_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + li_Puan[i];
-                }
-                if (link_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + link_Puan[i];
-                }
-                if (option_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + option_Puan[i];
-                }
-                if (span_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + span_Puan[i];
-                }
-                if (th_Puan.Count != 0)
-                {
-                    toplamPuan[i] = toplamPuan[i] + th_Puan[i];
-                }
-                //2 kelime için puanı toplanıcak
+                htmlstring = Cek_veri.GetVeri(url_list[j]);
+                HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
+                htmldoc.LoadHtml(htmlstring);
 
-                tekUrlPuan = tekUrlPuan + toplamPuan[i];
+                title_Puan = title.sıralamaPuan(url_list, kelime_list, Cek_veri, title.etiket, title.puan, htmldoc);
+                ahref_Puan = ahref.sıralamaPuan(url_list, kelime_list, Cek_veri, ahref.etiket, ahref.puan, htmldoc);
+                h1_Puan = h1.sıralamaPuan(url_list, kelime_list, Cek_veri, h1.etiket, h1.puan, htmldoc);
+                h2_Puan = h2.sıralamaPuan(url_list, kelime_list, Cek_veri, h2.etiket, h2.puan, htmldoc);
+                h3_Puan = h3.sıralamaPuan(url_list, kelime_list, Cek_veri, h3.etiket, h3.puan, htmldoc);
+                h4_Puan = h4.sıralamaPuan(url_list, kelime_list, Cek_veri, h4.etiket, h4.puan, htmldoc);
+                h5_Puan = h5.sıralamaPuan(url_list, kelime_list, Cek_veri, h5.etiket, h5.puan, htmldoc);
+                h6_Puan = h6.sıralamaPuan(url_list, kelime_list, Cek_veri, h6.etiket, h6.puan, htmldoc);
+                strong_Puan = strong.sıralamaPuan(url_list, kelime_list, Cek_veri, strong.etiket, strong.puan, htmldoc);
+                bold_Puan = bold.sıralamaPuan(url_list, kelime_list, Cek_veri, bold.etiket, bold.puan, htmldoc);
+                em_Puan = em.sıralamaPuan(url_list, kelime_list, Cek_veri, em.etiket, em.puan, htmldoc);
+                head_Puan = head.sıralamaPuan(url_list, kelime_list, Cek_veri, head.etiket, head.puan, htmldoc);
+                label_Puan = labelhtml.sıralamaPuan(url_list, kelime_list, Cek_veri, labelhtml.etiket, labelhtml.puan, htmldoc);
+                li_Puan = li.sıralamaPuan(url_list, kelime_list, Cek_veri, li.etiket, li.puan, htmldoc);
+                link_Puan = link.sıralamaPuan(url_list, kelime_list, Cek_veri, link.etiket, link.puan, htmldoc);
+                option_Puan = option.sıralamaPuan(url_list, kelime_list, Cek_veri, option.etiket, option.puan, htmldoc);
+                span_Puan = span.sıralamaPuan(url_list, kelime_list, Cek_veri, span.etiket, span.puan, htmldoc);
+                th_Puan = th.sıralamaPuan(url_list, kelime_list, Cek_veri, th.etiket, th.puan, htmldoc);
+
+                tekUrlPuan = 0;
+             
+
+                for (int i = 0; i < kelime_list.Count; i++)
+                {
+                    KeyCount = Cek_veri.FindWord(htmlstring, kelime_list[i]);
+                    kelimeSayilari.Add(KeyCount);
+                    if (i == kelime_list.Count - 1)
+                    {
+                        standartSapma = standart(kelimeSayilari);
+                        standartSapmaListesi.Add(standartSapma);
+                    }
+                    toplamPuan[i] = 0;
+                    if (ahref_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + ahref_Puan[i];
+                    }
+                    if (title_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + title_Puan[i];
+                    }
+                    if (h1_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h1_Puan[i];
+                    }
+                    if (h2_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h2_Puan[i];
+                    }
+                    if (h3_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h3_Puan[i];
+                    }
+                    if (h4_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h4_Puan[i];
+                    }
+                    if (h5_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h5_Puan[i];
+                    }
+                    if (h6_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + h6_Puan[i];
+                    }
+                    if (strong_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + strong_Puan[i];
+                    }
+                    if (bold_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + bold_Puan[i];
+                    }
+                    if (head_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + head_Puan[i];
+                    }
+                    if (label_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + label_Puan[i];
+                    }
+                    if (li_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + li_Puan[i];
+                    }
+                    if (link_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + link_Puan[i];
+                    }
+                    if (option_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + option_Puan[i];
+                    }
+                    if (span_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + span_Puan[i];
+                    }
+                    if (th_Puan.Count != 0)
+                    {
+                        toplamPuan[i] = toplamPuan[i] + th_Puan[i];
+                    }
+                    //2 kelime için puanı toplanıcak
+                    tekUrlPuan = tekUrlPuan + toplamPuan[i];
+                }
+                URLpuan.Add(tekUrlPuan/standartSapmaListesi[j]);
             }
-            //ŞURAYI DÜZENLİCEZ TÜM URLLER İÇİN PUAN ALICAK
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                URLpuan.Add(tekUrlPuan);
-            }
+        }
+        public double ortalama(List<int> dizi) // Ortalama
+        {
+            int toplam = 0;
+            for (int i = 0; i < dizi.Count; i++)
+                toplam += dizi[i];
+            return toplam / dizi.Count;
+        }
+
+        public double standart(List<int> dizi) // Standart Sapma
+        {
+            double ort = ortalama(dizi);
+            double toplam = 0.0;
+            for (int i = 0; i < dizi.Count; i++)
+                toplam += Math.Pow((dizi[i] - ort), 2);
+            return Math.Sqrt(toplam / (dizi.Count - 1));
         }
     }
 }

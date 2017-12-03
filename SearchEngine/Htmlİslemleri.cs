@@ -61,11 +61,5 @@ namespace SearchEngine
             return sayac;
 
         }
-        public void UrlSırala()
-        {
-
-
-
-        }
     }
 }
