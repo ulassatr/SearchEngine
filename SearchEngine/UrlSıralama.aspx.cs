@@ -40,9 +40,7 @@ namespace SearchEngine
                 kelime_list.Add(kelime_kumesi[i]);
 
             }
-
-
-
+#region tanımlamalar
             Title title = new Title();
             ahref a = new ahref();
             List<int> list = new List<int>();
@@ -99,12 +97,15 @@ namespace SearchEngine
             double standartSapma;
             List<double> URLpuan = new List<double>();
             double tekUrlPuan = 0;
+
+
+#endregion
             for (int j = 0; j < url_list.Count; j++)
             {
                 htmlstring = Cek_veri.GetVeri(url_list[j]);
                 HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
                 htmldoc.LoadHtml(htmlstring);
-
+#region etiketPuanlama
                 title_Puan = title.sıralamaPuan(url_list, kelime_list, Cek_veri, title.etiket, title.puan, htmldoc);
                 ahref_Puan = ahref.sıralamaPuan(url_list, kelime_list, Cek_veri, ahref.etiket, ahref.puan, htmldoc);
                 h1_Puan = h1.sıralamaPuan(url_list, kelime_list, Cek_veri, h1.etiket, h1.puan, htmldoc);
@@ -123,19 +124,24 @@ namespace SearchEngine
                 option_Puan = option.sıralamaPuan(url_list, kelime_list, Cek_veri, option.etiket, option.puan, htmldoc);
                 span_Puan = span.sıralamaPuan(url_list, kelime_list, Cek_veri, span.etiket, span.puan, htmldoc);
                 th_Puan = th.sıralamaPuan(url_list, kelime_list, Cek_veri, th.etiket, th.puan, htmldoc);
-
+                #endregion
                 tekUrlPuan = 0;
-             
 
                 for (int i = 0; i < kelime_list.Count; i++)
                 {
                     KeyCount = Cek_veri.FindWord(htmlstring, kelime_list[i]);
+                    if (kelimeSayilari.Count == kelime_list.Count)
+                    {
+                        kelimeSayilari.Clear();
+                    }
                     kelimeSayilari.Add(KeyCount);
                     if (i == kelime_list.Count - 1)
                     {
+                        standartSapma = 0;
                         standartSapma = standart(kelimeSayilari);
                         standartSapmaListesi.Add(standartSapma);
                     }
+ #region uzunifkontrolu
                     toplamPuan[i] = 0;
                     if (ahref_Puan.Count != 0)
                     {
@@ -205,11 +211,67 @@ namespace SearchEngine
                     {
                         toplamPuan[i] = toplamPuan[i] + th_Puan[i];
                     }
+#endregion
                     //2 kelime için puanı toplanıcak
                     tekUrlPuan = tekUrlPuan + toplamPuan[i];
                 }
-                URLpuan.Add(tekUrlPuan/standartSapmaListesi[j]);
+                URLpuan.Add(tekUrlPuan / standartSapmaListesi[j]);
             }
+#region sonuc
+            int b = 0;
+            double d = kelimeSayilari.Count / kelime_list.Count;
+            List<string> Result = new List<string>();
+            //
+            for (int i = 0; i < url_list.Count; i++)
+            {
+         
+                    Result.Add(url_list[i]);
+                    Result.Add("puan: " + URLpuan[i].ToString());
+               
+                for (int j = 0; j < kelime_list.Count; j++)
+                {
+                    if (b < d * (j + b + 1))
+                    {     
+                        Result.Add(kelime_list[j] + ":" + kelimeSayilari[b].ToString());
+                    }
+                    b++;
+                }
+            }
+
+            for (int c = 0; c < Result.Count; c++)
+            {
+                TextBox1.Text = TextBox1.Text + Result[c] + Environment.NewLine;
+            }
+
+            List<string> sonuc = new List<string>();
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                for (int j = 1; j < url_list.Count - i; j++)
+                {
+                    if (URLpuan[j] < URLpuan[j - 1])
+                    {
+                        double gecici = URLpuan[j - 1];
+                        URLpuan[j - 1] = URLpuan[j];
+                        URLpuan[j] = gecici;
+                        string geciciURL = url_list[j - 1];
+                        url_list[j - 1] = url_list[j];
+                        url_list[j] = geciciURL;
+                    }
+                }
+
+            }
+            url_list.Reverse();
+            URLpuan.Reverse();
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                sonuc.Add(url_list[i]);
+                sonuc.Add("puan: " + URLpuan[i].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox2.Text = TextBox2.Text+ sonuc[c] +Environment.NewLine;
+            }
+#endregion
         }
         public double ortalama(List<int> dizi) // Ortalama
         {
@@ -227,5 +289,6 @@ namespace SearchEngine
                 toplam += Math.Pow((dizi[i] - ort), 2);
             return Math.Sqrt(toplam / (dizi.Count - 1));
         }
+
     }
 }

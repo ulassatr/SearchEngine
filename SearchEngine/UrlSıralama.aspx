@@ -22,6 +22,10 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
          <asp:Button ID="btn_UrlSırala" runat="server" Text="Sırala" OnClick="btn_UrlSırala_Click" />
         </div>
+        <p>
+            <asp:TextBox ID="TextBox1" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+        </p>
+        <asp:TextBox ID="TextBox2" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
     </form>
     
 </body>

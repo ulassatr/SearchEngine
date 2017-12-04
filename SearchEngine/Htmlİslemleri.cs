@@ -46,8 +46,9 @@ namespace SearchEngine
         public int FindWord(string metin,string kelime)
         {
             int sayac = 0;
-                        
+            UrlPuan turkcelestirNesnesi = new UrlPuan();    
             string yeniMetin = metin.ToLower();
+            yeniMetin = turkcelestirNesnesi.turkcelestir(yeniMetin);
 
             int konum = yeniMetin.IndexOf(kelime);
 

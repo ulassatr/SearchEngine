@@ -19,6 +19,7 @@ namespace SearchEngine
             HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
             htmldoc.LoadHtml(html);
             aranankelime.ToLower();
+            aranankelime = turkcelestir(aranankelime);
             HtmlNodeCollection basliklar = htmldoc.DocumentNode.SelectNodes(etiket);
             List<string> liste = new List<string>();
             if (basliklar != null)
@@ -38,6 +39,7 @@ namespace SearchEngine
                 string tekstring;
                 tekstring = ConvertStringArrayToString(stringDizi);
                 tekstring = tekstring.ToLower();
+                turkcelestir(tekstring);
                 y = Cek_veri.FindWord(tekstring, aranankelime);
                 return y;
             }
@@ -69,6 +71,7 @@ namespace SearchEngine
             {
 
                 aranankelime[j].ToLower();
+                aranankelime[j] = turkcelestir(aranankelime[j]);
                 List<string> liste = new List<string>();
                 if (basliklar != null)
                 {
@@ -87,9 +90,8 @@ namespace SearchEngine
                     string tekstring;
                     tekstring = ConvertStringArrayToString(stringDizi);
                     tekstring = tekstring.ToLower();
+                    tekstring = turkcelestir(tekstring);
                     kelimeSayisi = Cek_veri.FindWord(tekstring, aranankelime[j]);
-
-
 
                     if (kelimeSayisi>50)
                     {
@@ -116,6 +118,18 @@ namespace SearchEngine
             }
             return etiketPuan;
 
+        }
+        public string turkcelestir(string metin)
+        {
+            string yeniMetin;
+            yeniMetin=metin.Replace('ü', 'u');
+            yeniMetin = yeniMetin.Replace('ç', 'ç');
+            yeniMetin = yeniMetin.Replace('ı', 'i');
+            yeniMetin = yeniMetin.Replace('ö', 'o');
+            yeniMetin = yeniMetin.Replace('ğ', 'g');
+            yeniMetin = yeniMetin.Replace('ş', 's');
+            yeniMetin = yeniMetin.Replace('Ü', 'U');
+            return yeniMetin;
         }
     }
 }
