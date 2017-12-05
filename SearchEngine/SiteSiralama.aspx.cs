@@ -40,9 +40,27 @@ namespace SearchEngine
 
             }
 
-            string htmlstring;
             List<string> linkListesi = new List<string>();
             List<string> yuhAqIkıncıDerinlik = new List<string>();
+            Htmlİslemleri Cek_veri = new Htmlİslemleri();
+            List<string> liste = new List<string>();
+            List<string> ikinciListe = new List<string>();
+
+            for (int j = 0; j < url_list.Count; j++)
+            {
+                liste.AddRange(altDerinligeIn(hrefDonduren(url_list), j, url_list));
+            }
+
+            for (int z = 0; z < liste.Count; z++)
+            {
+                ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste), z, liste));
+            }
+        }
+
+        public List<string> hrefDonduren(List<string> url_list)
+        {
+            string htmlstring;
+            List<string> hrefTags = new List<string>();
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             //Url listesi kadar htmllerini çekiyoruz
@@ -52,22 +70,32 @@ namespace SearchEngine
                 HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
                 htmldoc.LoadHtml(htmlstring);
 
-                List<string> hrefTags = new List<string>();
+
                 foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
                 {
-                    HtmlAttribute att = link.Attributes["href"];
-                    hrefTags.Add(att.Value); //linklerimizi alıyoruz
-                }
-                liste.AddRange(altDerinligeIn(hrefTags, j));
-            }
-       //     yuhAqIkıncıDerinlik.AddRange(ikinciDerinlikGeliyoBaba(liste));
-            //Öylesine yazdım
-        }
+                    if (link != null)
+                    {
+                        HtmlAttribute att = link.Attributes["href"];
+                        hrefTags.Add(att.Value); //linklerimizi alıyoruz
+                    }
 
-        public List<string> altDerinligeIn(List<string> hrefTags, int k)
+                }
+
+
+            }
+            return hrefTags;
+        }
+        public List<string> altDerinligeIn(List<string> hrefTags, int k, List<string> url_list)
         {
             List<string> dogruLinkler = new List<string>();
             List<bool> deneme = new List<bool>();
+            for (int c = 0; c < hrefTags.Count; c++)
+            {
+                if (hrefTags[c].IndexOf(".pdf") != -1)
+                {
+                    hrefTags.RemoveAt(c);
+                }
+            }
             for (int i = 0; i < hrefTags.Count; i++)
             {
                 deneme.Add(hrefTags[i].StartsWith(url_list[k]));
