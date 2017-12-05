@@ -79,10 +79,18 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Search.aspx" />
+    <Content Include="SiteSiralama.aspx" />
     <Content Include="UrlSıralama.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SiteSiralama.aspx.cs">
+      <DependentUpon>SiteSiralama.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SiteSiralama.aspx.designer.cs">
+      <DependentUpon>SiteSiralama.aspx</DependentUpon>
+    </Compile>
     <Compile Include="TagsFolder\ahref.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
