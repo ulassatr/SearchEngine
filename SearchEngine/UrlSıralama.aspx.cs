@@ -25,7 +25,8 @@ namespace SearchEngine
 
         protected void btn_UrlSırala_Click(object sender, EventArgs e)
         {
-
+            TextBox1.Text = "";
+            TextBox2.Text = "";
             string[] url_kumesi = UrlText.Text.Split(',');
 
             for (int i = 0; i < url_kumesi.Count(); i++)
@@ -45,7 +46,7 @@ namespace SearchEngine
             ahref a = new ahref();
             List<int> list = new List<int>();
             UrlPuan url_puan = new UrlPuan();
-
+            List<string> Result = new List<string>();
             List<double> title_Puan = new List<double>();
             List<double> ahref_Puan = new List<double>();
             List<double> h1_Puan = new List<double>();
@@ -91,7 +92,7 @@ namespace SearchEngine
 
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             string htmlstring;
-            List<int> kelimeSayilari = new List<int>();
+            List<int> kelimeSayilari = new List<int>();        
             int KeyCount = 0;
             List<double> standartSapmaListesi = new List<double>();
             double standartSapma;
@@ -126,13 +127,13 @@ namespace SearchEngine
                 th_Puan = th.sıralamaPuan(url_list, kelime_list, Cek_veri, th.etiket, th.puan, htmldoc);
                 #endregion
                 tekUrlPuan = 0;
-
+                
                 for (int i = 0; i < kelime_list.Count; i++)
                 {
                     KeyCount = Cek_veri.FindWord(htmlstring, kelime_list[i]);
                     if (kelimeSayilari.Count == kelime_list.Count)
                     {
-                        kelimeSayilari.Clear();
+                       kelimeSayilari.Clear();
                     }
                     kelimeSayilari.Add(KeyCount);
                     if (i == kelime_list.Count - 1)
@@ -215,28 +216,23 @@ namespace SearchEngine
                     //2 kelime için puanı toplanıcak
                     tekUrlPuan = tekUrlPuan + toplamPuan[i];
                 }
-                URLpuan.Add(tekUrlPuan / standartSapmaListesi[j]);
-            }
-#region sonuc
-            int b = 0;
-            double d = kelimeSayilari.Count / kelime_list.Count;
-            List<string> Result = new List<string>();
-            //
-            for (int i = 0; i < url_list.Count; i++)
-            {
-         
-                    Result.Add(url_list[i]);
-                    Result.Add("puan: " + URLpuan[i].ToString());
-               
-                for (int j = 0; j < kelime_list.Count; j++)
+                if(kelime_list.Count==1)
                 {
-                    if (b < d * (j + b + 1))
-                    {     
-                        Result.Add(kelime_list[j] + ":" + kelimeSayilari[b].ToString());
-                    }
-                    b++;
+                    URLpuan.Add(tekUrlPuan);
+                }
+                else
+                {
+                    URLpuan.Add(tekUrlPuan / standartSapmaListesi[j]);
+                }
+                Result.Add(url_list[j]);
+                Result.Add("puan: " + URLpuan[j].ToString());
+                for (int i = 0; i < kelime_list.Count; i++)
+                {                   
+                        Result.Add(kelime_list[i] + ":" + kelimeSayilari[i].ToString());                  
                 }
             }
+#region sonuc
+            double d = kelimeSayilari.Count / kelime_list.Count;
 
             for (int c = 0; c < Result.Count; c++)
             {

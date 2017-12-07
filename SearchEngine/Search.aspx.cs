@@ -60,6 +60,9 @@ namespace SearchEngine
             toplamKelimeSayisi = th_sayi + h1_sayi + title_sayi+a_sayi+title_sayi+h2_sayi+h3_sayi+span_sayi+head_Sayi;
             //      int KeyCount=Cek_veri.FindWord(html,arananKelime);
 
+            text_goruntule.Text = "Toplam Kelime Sayısı : "+toplamKelimeSayisi.ToString();
+
+
         }
        
     }

@@ -50,11 +50,11 @@ namespace SearchEngine
             string yeniMetin = metin.ToLower();
             yeniMetin = turkcelestirNesnesi.turkcelestir(yeniMetin);
 
-            int konum = yeniMetin.IndexOf(kelime);
+            int konum = yeniMetin.IndexOf(kelime+" ");
 
             while (konum != -1)
             {
-                konum = yeniMetin.IndexOf(kelime, konum + 1);
+                konum = yeniMetin.IndexOf(kelime+" ", konum + 1);
 
                 sayac++;
 

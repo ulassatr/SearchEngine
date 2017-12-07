@@ -19,6 +19,10 @@
             <br />
             <asp:Button ID="SearchButton" runat="server" Text="Ara" OnClick="SearchButton_Click" />
 
+            <br />
+            <br />
+            <asp:TextBox ID="text_goruntule" runat="server" ReadOnly="True" TextMode="MultiLine" Width="253px"></asp:TextBox>
+
         </div>
     </form>
 </body>
