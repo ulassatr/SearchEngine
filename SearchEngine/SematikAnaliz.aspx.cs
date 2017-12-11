@@ -20,6 +20,10 @@ namespace SearchEngine
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            TextBox3.Text = " ";
+            TextBox4.Text = " ";
+            TextBox5.Text = " ";
+            TextBox6.Text = " ";
             linkleriBul();
         }
         public void linkleriBul()
@@ -56,7 +60,7 @@ namespace SearchEngine
 
             for (int j = 0; j < url_list.Count; j++)
             {
-                liste.AddRange(altDerinligeIn(hrefDonduren(url_list), j, url_list));
+                liste.AddRange(altDerinligeIn(hrefDonduren(url_list,j), j, url_list));
             }
             for (int i = 0; i < url_list.Count; i++)
             {
@@ -70,7 +74,7 @@ namespace SearchEngine
             }
             for (int z = 0; z < liste.Count; z++)
             {
-                ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste), z, liste));
+                ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste,z), z, liste));
 
             }
             for (int i = 0; i < liste.Count; i++)
@@ -83,26 +87,11 @@ namespace SearchEngine
                     }
                 }
             }
-
             List<string> sonuc = new List<string>();
-            List<double> anaURL = puanHesapla(url_list);
-            List<double> derinlik1 = puanHesapla(liste);
-            List<double> derinlik2 = puanHesapla(ikinciListe);
-
-            for (int i = 0; i < anaURL.Count; i++)
+            sonuc.Add("Kelimelerin eş anlamlısı:");
+            for (int j = 0; j < esAnlamMethod(kelime_list).Count; j++)
             {
-                sonuc.Add(url_list[i]);
-                sonuc.Add("puan: " + anaURL[i].ToString());
-            }
-            for (int j = 0; j < derinlik1.Count; j++)
-            {
-                sonuc.Add(liste[j]);
-                sonuc.Add("puan: " + derinlik1[j].ToString());
-            }
-            for (int k = 0; k < derinlik2.Count; k++)
-            {
-                sonuc.Add(ikinciListe[k]);
-                sonuc.Add("puan: " + derinlik2[k].ToString());
+                sonuc.Add(esAnlamMethod(kelime_list)[j]);
             }
             for (int c = 0; c < sonuc.Count; c++)
             {
@@ -110,18 +99,207 @@ namespace SearchEngine
             }
 
 
+            List<double> anaURL = puanHesapla(url_list);
+            List<double> derinlik1 = puanHesapla(liste);
+            List<double> derinlik2 = puanHesapla(ikinciListe);
+
+            sonuc.Clear();
+           
+            for (int i = 0; i < anaURL.Count; i++)
+            {
+                sonuc.Add(url_list[i]);
+                sonuc.Add("puan: " + anaURL[i].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox4.Text = TextBox4.Text + sonuc[c] + Environment.NewLine;
+            }
+            sonuc.Clear();
+            for (int j = 0; j < derinlik1.Count; j++)
+            {
+                sonuc.Add(liste[j]);
+                sonuc.Add("puan: " + derinlik1[j].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox5.Text = TextBox5.Text + sonuc[c] + Environment.NewLine;
+            }
+            sonuc.Clear();
+            for (int k = 0; k < derinlik2.Count; k++)
+            {
+                sonuc.Add(ikinciListe[k]);
+                sonuc.Add("puan: " + derinlik2[k].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox6.Text = TextBox6.Text + sonuc[c] + Environment.NewLine;
+            }
+            sonuc.Clear();
+
+            double toplam = 0;
+            List<double> yeniListe = new List<double>();
+            List<double> sonListe = new List<double>();
+            for (int j = 0; j < url_list.Count; j++)
+            {
+                for (int i = 0; i < liste.Count; i++)
+                {
+                    if (liste[i].StartsWith(url_list[j]))
+                    {
+                        yeniListe.Add(derinlik1[i]);
+                    }
+
+                }
+                for (int a = 0; a < yeniListe.Count; a++)
+                {
+                    toplam = toplam + yeniListe[a];
+                }
+                sonListe.Add(toplam);
+                toplam = 0;
+                yeniListe.Clear();
+            }
+            List<double> yeniListe2 = new List<double>();
+            List<double> sonListe2 = new List<double>();
+            for (int j = 0; j < url_list.Count; j++)
+            {
+                for (int i = 0; i < ikinciListe.Count; i++)
+                {
+                    if (ikinciListe[i].StartsWith(url_list[j]))
+                    {
+                        yeniListe2.Add(derinlik2[i]);
+                    }
+
+                }
+                for (int a = 0; a < yeniListe2.Count; a++)
+                {
+                    toplam = toplam + yeniListe2[a];
+                }
+                sonListe2.Add(toplam);
+                toplam = 0;
+                yeniListe2.Clear();
+            }
+
+            for (int j = 0; j < sonListe.Count; j++)
+            {
+                sonuc.Add(url_list[j] + "sitesinin puanı: " + sonListe[j].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox5.Text = TextBox5.Text + sonuc[c] + Environment.NewLine;
+            }
+            sonuc.Clear();
+
+            for (int j = 0; j < sonListe2.Count; j++)
+            {
+                sonuc.Add(url_list[j] + "sitesinin puanı: " + sonListe2[j].ToString());
+            }
+            for (int c = 0; c < sonuc.Count; c++)
+            {
+                TextBox6.Text = TextBox6.Text + sonuc[c] + Environment.NewLine;
+            }
+            sonuc.Clear();
+            List<string> siralama = new List<string>();
+            siralama.Add("Sıralanmıs Hali:");
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                for (int j = 1; j < url_list.Count - i; j++)
+                {
+                    if (anaURL[j] < anaURL[j - 1])
+                    {
+                        double gecici = anaURL[j - 1];
+                        anaURL[j - 1] = anaURL[j];
+                        anaURL[j] = gecici;
+                        string geciciURL = url_list[j - 1];
+                        url_list[j - 1] = url_list[j];
+                        url_list[j] = geciciURL;
+                    }
+                }
+
+            }
+            url_list.Reverse();
+            anaURL.Reverse();
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                siralama.Add(url_list[i]);
+                siralama.Add("puan: " + anaURL[i].ToString());
+            }
+            for (int c = 0; c < siralama.Count; c++)
+            {
+                TextBox4.Text = TextBox4.Text + siralama[c] + Environment.NewLine;
+            }
+
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                for (int j = 1; j < url_list.Count - i; j++)
+                {
+                    if (sonListe[j] < sonListe[j - 1])
+                    {
+                        double gecici = sonListe[j - 1];
+                        sonListe[j - 1] = sonListe[j];
+                        sonListe[j] = gecici;
+                        string geciciURL = url_list[j - 1];
+                        url_list[j - 1] = url_list[j];
+                        url_list[j] = geciciURL;
+                    }
+                }
+
+            }
+            //url_list.Reverse();
+            sonListe.Reverse();
+            siralama.Clear();
+            siralama.Add("Sıralanmıs Hali:");
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                siralama.Add(url_list[i]);
+                siralama.Add("puan: " + sonListe[i].ToString());
+            }
+            for (int c = 0; c < siralama.Count; c++)
+            {
+                TextBox5.Text = TextBox5.Text + siralama[c] + Environment.NewLine;
+            }
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                for (int j = 1; j < url_list.Count - i; j++)
+                {
+                    if (sonListe2[j] < sonListe2[j - 1])
+                    {
+                        double gecici = sonListe2[j - 1];
+                        sonListe2[j - 1] = sonListe2[j];
+                        sonListe2[j] = gecici;
+                        string geciciURL = url_list[j - 1];
+                        url_list[j - 1] = url_list[j];
+                        url_list[j] = geciciURL;
+                    }
+                }
+
+            }
+            // url_list.Reverse();
+            sonListe2.Reverse();
+            siralama.Clear();
+            siralama.Add("Sıralanmıs Hali:");
+            for (int i = 0; i < url_list.Count; i++)
+            {
+                siralama.Add(url_list[i]);
+                siralama.Add("puan: " + sonListe2[i].ToString());
+            }
+            for (int c = 0; c < siralama.Count; c++)
+            {
+                TextBox6.Text = TextBox6.Text + siralama[c] + Environment.NewLine;
+            }
+
+
+
+
 
         }
 
-        public List<string> hrefDonduren(List<string> url_list)
+        public List<string> hrefDonduren(List<string> url_list,int j)
         {
             string htmlstring;
             List<string> hrefTags = new List<string>();
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             //Url listesi kadar htmllerini çekiyoruz
-            for (int j = 0; j < url_list.Count; j++)
-            {
+         
                 try
                 {
                     htmlstring = Cek_veri.GetVeri(url_list[j]);
@@ -156,9 +334,10 @@ namespace SearchEngine
                 }
 
 
-            }
+            
             return hrefTags;
         }
+
         public List<string> altDerinligeIn(List<string> hrefTags, int k, List<string> url_list)
         {
             List<string> dogruLinkler = new List<string>();
@@ -376,6 +555,7 @@ namespace SearchEngine
             return URLpuan;
 
         }
+
         public double ortalama(List<int> dizi) // Ortalama
         {
             int toplam = 0;
@@ -417,23 +597,18 @@ namespace SearchEngine
                     }
                     if (link[1].InnerText.Contains(','))
                     {
-
                         parcala = link[1].InnerText.Split(',').ToList();
                         for (int h = 0; h < parcala.Count; h++)
                         {
                             donen = parcala[h].Trim();
                             esAnlam.Add(donen);
                         }
-
                     }
                     else
                     {
                         esAnlam.Add(link[1].InnerText);
                     }
-
-
                 }
-
             }
             return esAnlam;
         }
