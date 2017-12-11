@@ -9,11 +9,10 @@ using System.Web.UI.WebControls;
 
 namespace SearchEngine
 {
-    public partial class SiteSiralama : System.Web.UI.Page
+    public partial class SematikAnaliz : System.Web.UI.Page
     {
         public List<string> url_list = new List<string>();
         public List<string> kelime_list = new List<string>();
-      
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -21,9 +20,6 @@ namespace SearchEngine
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            TextBox3.Text = "";
-            TextBox4.Text = "";
-            TextBox5.Text = "";
             linkleriBul();
         }
         public void linkleriBul()
@@ -44,16 +40,23 @@ namespace SearchEngine
                 kelime_list.Add(kelime_kumesi[i]);
 
             }
+            List<string> esAnlam = esAnlamMethod(kelime_list);
+
+            for (int i = 0; i < esAnlam.Count; i++)
+            {
+                kelime_list.Add(esAnlam[i]);
+            }
+
 
             List<string> linkListesi = new List<string>();
+            List<string> yuhAqIkıncıDerinlik = new List<string>();
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             List<string> ikinciListe = new List<string>();
-            
 
             for (int j = 0; j < url_list.Count; j++)
             {
-                liste.AddRange(altDerinligeIn(hrefDonduren(url_list, j), j, url_list));
+                liste.AddRange(altDerinligeIn(hrefDonduren(url_list), j, url_list));
             }
             for (int i = 0; i < url_list.Count; i++)
             {
@@ -67,7 +70,7 @@ namespace SearchEngine
             }
             for (int z = 0; z < liste.Count; z++)
             {
-                ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste, z), z, liste));
+                ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste), z, liste));
 
             }
             for (int i = 0; i < liste.Count; i++)
@@ -85,28 +88,17 @@ namespace SearchEngine
             List<double> anaURL = puanHesapla(url_list);
             List<double> derinlik1 = puanHesapla(liste);
             List<double> derinlik2 = puanHesapla(ikinciListe);
-                
 
             for (int i = 0; i < anaURL.Count; i++)
             {
                 sonuc.Add(url_list[i]);
                 sonuc.Add("puan: " + anaURL[i].ToString());
             }
-            for (int c = 0; c < sonuc.Count; c++)
-            {
-                TextBox3.Text = TextBox3.Text + sonuc[c] + Environment.NewLine;
-            }
-            sonuc.Clear();
             for (int j = 0; j < derinlik1.Count; j++)
             {
                 sonuc.Add(liste[j]);
                 sonuc.Add("puan: " + derinlik1[j].ToString());
             }
-            for (int c = 0; c < sonuc.Count; c++)
-            {
-                TextBox4.Text = TextBox4.Text + sonuc[c] + Environment.NewLine;
-            }
-            sonuc.Clear();
             for (int k = 0; k < derinlik2.Count; k++)
             {
                 sonuc.Add(ikinciListe[k]);
@@ -114,219 +106,66 @@ namespace SearchEngine
             }
             for (int c = 0; c < sonuc.Count; c++)
             {
-                TextBox5.Text = TextBox5.Text + sonuc[c] + Environment.NewLine;
-            }
-            sonuc.Clear();
-
-            //for (int i = 0; i < kelime_list.Count; i++)
-            //{
-            //    Result.Add(kelime_list[i] + ":" + kelimeSayilari[i].ToString());
-            //}
-            double toplam = 0;
-            List<double> yeniListe = new List<double>();
-            List<double> sonListe = new List<double>();
-            for (int j = 0; j < url_list.Count; j++)
-            {
-                for (int i = 0; i < liste.Count; i++)
-                {
-                    if (liste[i].StartsWith(url_list[j]))
-                    {
-                        yeniListe.Add(derinlik1[i]);
-                    }
-
-                }
-                for (int a = 0; a < yeniListe.Count; a++)
-                {
-                    toplam = toplam + yeniListe[a];
-                }
-                sonListe.Add(toplam);
-                toplam = 0;
-                yeniListe.Clear();
-            }
-            List<double> yeniListe2 = new List<double>();
-            List<double> sonListe2 = new List<double>();
-            for (int j = 0; j < url_list.Count; j++)
-            {
-                for (int i = 0; i < ikinciListe.Count; i++)
-                {
-                    if (ikinciListe[i].StartsWith(url_list[j]))
-                    {
-                        yeniListe2.Add(derinlik2[i]);
-                    }
-
-                }
-                for (int a = 0; a < yeniListe2.Count; a++)
-                {
-                    toplam = toplam + yeniListe2[a];
-                }
-                sonListe2.Add(toplam);
-                toplam = 0;
-                yeniListe2.Clear();
+                TextBox3.Text = TextBox3.Text + sonuc[c] + Environment.NewLine;
             }
 
-            for (int j = 0; j < sonListe.Count; j++)
-            {
-                sonuc.Add(url_list[j] + "sitesinin puanı: " + sonListe[j].ToString());
-            }
-            for (int c = 0; c < sonuc.Count; c++)
-            {
-                TextBox4.Text = TextBox4.Text + sonuc[c] + Environment.NewLine;
-            }
-            sonuc.Clear();
 
-            for (int j = 0; j < sonListe2.Count; j++)
-            {
-                sonuc.Add(url_list[j] + "sitesinin puanı: " + sonListe2[j].ToString());
-            }
-            for (int c = 0; c < sonuc.Count; c++)
-            {
-                TextBox5.Text = TextBox5.Text + sonuc[c] + Environment.NewLine;
-            }
-            sonuc.Clear();
-
-
-            List<string> siralama = new List<string>();
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                for (int j = 1; j < url_list.Count - i; j++)
-                {
-                    if (anaURL[j] < anaURL[j - 1])
-                    {
-                        double gecici = anaURL[j - 1];
-                        anaURL[j - 1] = anaURL[j];
-                        anaURL[j] = gecici;
-                        string geciciURL = url_list[j - 1];
-                        url_list[j - 1] = url_list[j];
-                        url_list[j] = geciciURL;
-                    }
-                }
-
-            }
-            url_list.Reverse();
-            anaURL.Reverse();
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                siralama.Add(url_list[i]);
-                siralama.Add("puan: " + anaURL[i].ToString());
-            }
-            for (int c = 0; c < siralama.Count; c++)
-            {
-                TextBox3.Text = TextBox3.Text + siralama[c] + Environment.NewLine;
-            }
-
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                for (int j = 1; j < url_list.Count - i; j++)
-                {
-                    if (sonListe[j] < sonListe[j - 1])
-                    {
-                        double gecici = sonListe[j - 1];
-                        sonListe[j - 1] = sonListe[j];
-                        sonListe[j] = gecici;
-                        string geciciURL = url_list[j - 1];
-                        url_list[j - 1] = url_list[j];
-                        url_list[j] = geciciURL;
-                    }
-                }
-
-            }
-            //url_list.Reverse();
-            sonListe.Reverse();
-            siralama.Clear();
-            siralama.Add("Sıralanmıs Hali:");
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                siralama.Add(url_list[i]);
-                siralama.Add("puan: " + sonListe[i].ToString());
-            }
-            for (int c = 0; c < siralama.Count; c++)
-            {
-                TextBox4.Text = TextBox4.Text + siralama[c] + Environment.NewLine;
-            }
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                for (int j = 1; j < url_list.Count - i; j++)
-                {
-                    if (sonListe2[j] < sonListe2[j - 1])
-                    {
-                        double gecici = sonListe2[j - 1];
-                        sonListe2[j - 1] = sonListe2[j];
-                        sonListe2[j] = gecici;
-                        string geciciURL = url_list[j - 1];
-                        url_list[j - 1] = url_list[j];
-                        url_list[j] = geciciURL;
-                    }
-                }
-
-            }
-            //   url_list.Reverse();
-            sonListe2.Reverse();
-            siralama.Clear();
-            siralama.Add("Sıralanmıs Hali:");
-            for (int i = 0; i < url_list.Count; i++)
-            {
-                siralama.Add(url_list[i]);
-                siralama.Add("puan: " + sonListe2[i].ToString());
-            }
-            for (int c = 0; c < siralama.Count; c++)
-            {
-                TextBox5.Text = TextBox5.Text + siralama[c] + Environment.NewLine;
-            }
 
         }
 
-        public List<string> hrefDonduren(List<string> url_list, int j)
+        public List<string> hrefDonduren(List<string> url_list)
         {
             string htmlstring;
             List<string> hrefTags = new List<string>();
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             //Url listesi kadar htmllerini çekiyoruz
-
-            try
+            for (int j = 0; j < url_list.Count; j++)
             {
-                htmlstring = Cek_veri.GetVeri(url_list[j]);
-                HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
-                htmldoc.LoadHtml(htmlstring);
-
-                if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
+                try
                 {
+                    htmlstring = Cek_veri.GetVeri(url_list[j]);
+                    HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
+                    htmldoc.LoadHtml(htmlstring);
 
-                    foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
+                    if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
                     {
 
-
-                        HtmlAttribute att = link.Attributes["href"];
-                        hrefTags.Add(att.Value); //linklerimizi alıyoruz
-                        if (hrefTags.Count == 200)
+                        foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
                         {
-                            return hrefTags;
-                        }
 
+
+                            HtmlAttribute att = link.Attributes["href"];
+                            hrefTags.Add(att.Value); //linklerimizi alıyoruz
+                            if (hrefTags.Count == 200)
+                            {
+                                return hrefTags;
+                            }
+
+
+                        }
                     }
+
                 }
 
+                catch (Exception ex)
+                {
+
+                    url_list.RemoveAt(j);
+                    //throw;
+                }
+
+
             }
-
-            catch (Exception ex)
-            {
-
-                url_list.RemoveAt(j);
-                //throw;
-            }
-
-
-
             return hrefTags;
         }
         public List<string> altDerinligeIn(List<string> hrefTags, int k, List<string> url_list)
         {
-            HashSet<string> essizLinkler = new HashSet<string>();
             List<string> dogruLinkler = new List<string>();
             List<bool> deneme = new List<bool>();
             for (int c = 0; c < hrefTags.Count; c++)
             {
-                if (hrefTags[c].IndexOf(".pdf") != -1 || hrefTags[c].IndexOf(".doc") != -1 || hrefTags[c].IndexOf(".jpeg") != -1 || hrefTags[c].IndexOf(".gif") != -1)
+                if (hrefTags[c].IndexOf(".pdf") != -1)
                 {
                     hrefTags.RemoveAt(c);
                 }
@@ -344,18 +183,9 @@ namespace SearchEngine
 
                 }
             }
-            for (int i = 0; i < dogruLinkler.Count; i++)
-            {
-                essizLinkler.Add(dogruLinkler[i]);
-
-            }
-            for (int i = 0; i < essizLinkler.Count; i++)
-            {
-                dogruLinkler = essizLinkler.ToList();
-            }
             return dogruLinkler;
         }
-       
+
         public List<double> puanHesapla(List<string> url_list)
         {
             #region tanımlamalar
@@ -560,17 +390,52 @@ namespace SearchEngine
             double toplam = 0.0;
             for (int i = 0; i < dizi.Count; i++)
                 toplam += Math.Pow((dizi[i] - ort), 2);
-            for (int i = 0; i < dizi.Count; i++)
-            {
-                if (dizi[i] == 0)
-                {
-                    return 100;
-                }
-            }
-            
             return Math.Sqrt(toplam / (dizi.Count - 1));
         }
 
+        public List<string> esAnlamMethod(List<string> kelime_list)
+        {
+            List<HtmlNode> linkNode = new List<HtmlNode>();
+            Htmlİslemleri Cek_veri = new Htmlİslemleri();
+            List<string> esAnlam = new List<string>();
+            for (int i = 0; i < kelime_list.Count; i++)
+            {
+                List<string> parcala;
+                string donen;
+                string htmlstring;
+                string kelimeUrl = "http://www.es-anlam.com/kelime/" + kelime_list[i];
+                htmlstring = Cek_veri.GetVeri(kelimeUrl);
+                HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
+                htmldoc.LoadHtml(htmlstring);
+                HtmlNodeCollection link = htmldoc.DocumentNode.SelectNodes("//strong");
 
+                if (link != null)
+                {
+                    if (link[1].InnerText == "BULUNAMADI !")
+                    {
+                        continue;
+                    }
+                    if (link[1].InnerText.Contains(','))
+                    {
+
+                        parcala = link[1].InnerText.Split(',').ToList();
+                        for (int h = 0; h < parcala.Count; h++)
+                        {
+                            donen = parcala[h].Trim();
+                            esAnlam.Add(donen);
+                        }
+
+                    }
+                    else
+                    {
+                        esAnlam.Add(link[1].InnerText);
+                    }
+
+
+                }
+
+            }
+            return esAnlam;
+        }
     }
 }

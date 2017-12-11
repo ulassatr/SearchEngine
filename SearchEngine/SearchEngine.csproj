@@ -79,11 +79,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Search.aspx" />
+    <Content Include="SematikAnaliz.aspx" />
     <Content Include="SiteSiralama.aspx" />
     <Content Include="UrlSıralama.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SematikAnaliz.aspx.cs">
+      <DependentUpon>SematikAnaliz.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SematikAnaliz.aspx.designer.cs">
+      <DependentUpon>SematikAnaliz.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SiteSiralama.aspx.cs">
       <DependentUpon>SiteSiralama.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -170,6 +180,9 @@
     <Compile Include="UrlSıralama.aspx.designer.cs">
       <DependentUpon>UrlSıralama.aspx</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

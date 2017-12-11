@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SiteSiralama.aspx.cs" Inherits="SearchEngine.SiteSiralama" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SematikAnaliz.aspx.cs" Inherits="SearchEngine.SematikAnaliz" %>
+
 
 <!DOCTYPE html>
 
@@ -22,12 +23,7 @@
         <br />
         <br />
         <asp:TextBox ID="TextBox3" runat="server"  ReadOnly="True" TextMode="MultiLine" Width="586px"></asp:TextBox>
-        <br />
-        <br />
-        <asp:TextBox ID="TextBox4" runat="server"  ReadOnly="True" TextMode="MultiLine" Width="586px"></asp:TextBox>
-        <br />
-        <br />
-        <asp:TextBox ID="TextBox5" runat="server"  ReadOnly="True" TextMode="MultiLine" Width="586px"></asp:TextBox>
     </form>
 </body>
 </html>
+
