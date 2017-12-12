@@ -78,6 +78,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AnaSayfa.aspx" />
     <Content Include="Search.aspx" />
     <Content Include="SematikAnaliz.aspx" />
     <Content Include="SiteSiralama.aspx" />
@@ -87,6 +88,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnaSayfa.aspx.cs">
+      <DependentUpon>AnaSayfa.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AnaSayfa.aspx.designer.cs">
+      <DependentUpon>AnaSayfa.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SematikAnaliz.aspx.cs">
       <DependentUpon>SematikAnaliz.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
