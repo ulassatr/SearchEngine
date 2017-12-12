@@ -27,8 +27,9 @@ namespace SearchEngine
         {
             TextBox1.Text = "";
             TextBox2.Text = "";
+            //Virgüle kadar ayırıyoruz.
             string[] url_kumesi = UrlText.Text.Split(',');
-
+            //Textboxlara girilen verileri listeye attık.
             for (int i = 0; i < url_kumesi.Count(); i++)
             {
                 url_list.Add(url_kumesi[i]);
@@ -39,8 +40,8 @@ namespace SearchEngine
             for (int i = 0; i < kelime_kumesi.Count(); i++)
             {
                 kelime_list.Add(kelime_kumesi[i]);
-
             }
+
 #region tanımlamalar
             Title title = new Title();
             ahref a = new ahref();
@@ -67,7 +68,6 @@ namespace SearchEngine
             List<double> span_Puan = new List<double>();
             List<double> strong_Puan = new List<double>();
             List<double> th_Puan = new List<double>();
-            //     List<double> toplamPuan = new List<double>();
             double[] toplamPuan = new double[kelime_list.Count];
             ahref ahref = new ahref();
             h1 h1 = new h1();
@@ -81,15 +81,12 @@ namespace SearchEngine
             Link link = new Link();
             Span span = new Span();
             Strong strong = new Strong();
-            Big big = new Big();
             Bold bold = new Bold();
             Em em = new Em();
             Li li = new Li();
             Option option = new Option();
             Th th = new Th();
             LabelHtml labelhtml = new LabelHtml();
-
-
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             string htmlstring;
             List<int> kelimeSayilari = new List<int>();        
@@ -101,6 +98,8 @@ namespace SearchEngine
 
 
 #endregion
+
+            //Her url için html çekme ve puanlama işlemini yapıyoruz
             for (int j = 0; j < url_list.Count; j++)
             {
                 htmlstring = Cek_veri.GetVeri(url_list[j]);
@@ -231,15 +230,15 @@ namespace SearchEngine
                         Result.Add(kelime_list[i] + ":" + kelimeSayilari[i].ToString());                  
                 }
             }
-#region sonuc
             double d = kelimeSayilari.Count / kelime_list.Count;
 
             for (int c = 0; c < Result.Count; c++)
             {
                 TextBox1.Text = TextBox1.Text + Result[c] + Environment.NewLine;
             }
-
+#region sıralama
             List<string> sonuc = new List<string>();
+            sonuc.Add("Sıralanmış Hali:");
             for (int i = 0; i < url_list.Count; i++)
             {
                 for (int j = 1; j < url_list.Count - i; j++)
@@ -267,8 +266,10 @@ namespace SearchEngine
             {
                 TextBox2.Text = TextBox2.Text+ sonuc[c] +Environment.NewLine;
             }
-#endregion
+# endregion
+            
         }
+
         public double ortalama(List<int> dizi) // Ortalama
         {
             int toplam = 0;
@@ -286,5 +287,9 @@ namespace SearchEngine
             return Math.Sqrt(toplam / (dizi.Count - 1));
         }
 
+        protected void btn_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AnaSayfa.aspx");
+        }
     }
 }

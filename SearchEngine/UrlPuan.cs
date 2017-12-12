@@ -60,6 +60,7 @@ namespace SearchEngine
             }
             return builder.ToString();
         }
+
         public List<double> sıralamaPuan(List<string> url, List<string> aranankelime, Htmlİslemleri Cek_veri, string etiket, double puan, HtmlAgilityPack.HtmlDocument htmldoc)
         {
 
@@ -92,7 +93,7 @@ namespace SearchEngine
                     tekstring = tekstring.ToLower();
                     tekstring = turkcelestir(tekstring);
                     kelimeSayisi = Cek_veri.FindWord(tekstring, aranankelime[j]);
-
+                    /*
                     if (kelimeSayisi>50)
                     {
                         kelimeSayisi = kelimeSayisi / 5;
@@ -109,6 +110,7 @@ namespace SearchEngine
                     {
                         kelimeSayisi = kelimeSayisi / 2;
                     }
+                    */
                     anlikPuan = kelimeSayisi * puan;
               
                     etiketPuan.Add(anlikPuan);
@@ -128,7 +130,6 @@ namespace SearchEngine
             yeniMetin = yeniMetin.Replace('ö', 'o');
             yeniMetin = yeniMetin.Replace('ğ', 'g');
             yeniMetin = yeniMetin.Replace('ş', 's');
-            yeniMetin = yeniMetin.Replace('Ü', 'U');
             return yeniMetin;
         }
     }

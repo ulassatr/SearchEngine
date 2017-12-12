@@ -10,22 +10,25 @@
 <body style="height: 240px">
     <form id="form1" runat="server">
         <div>
-            <asp:TextBox ID="UrlText" runat="server" Width="179px"></asp:TextBox>
+            URL<br />
+            <br />
+            <asp:TextBox ID="UrlText" runat="server" Width="315px"></asp:TextBox>
             <br />
             <br />
-            <asp:TextBox ID="KelimeText" runat="server" Width="181px"></asp:TextBox>
+            KELİMELER<br />
+            <br />
+            <asp:TextBox ID="KelimeText" runat="server" Width="315px"></asp:TextBox>
             <br />
             <br />
         </div>
-        <asp:Button ID="btn_urlEkle" runat="server" Text="Url Ekle" OnClick="btn_urlEkle_Click" />
-         &nbsp;&nbsp;&nbsp;&nbsp;<asp:Button ID="button_kelimeEkle" runat="server" Text="Kelime Ekle" />
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         <asp:Button ID="btn_UrlSırala" runat="server" Text="Sırala" OnClick="btn_UrlSırala_Click" />
+         <asp:Button ID="btn_UrlSırala" runat="server" Text="Sırala" OnClick="btn_UrlSırala_Click" Width="86px" />
         </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         <asp:Button ID="btn_UrlSırala0" runat="server" Text="Ana Sayfaya Dön" OnClick="btn_Click" Width="129px" />
         <p>
-            <asp:TextBox ID="TextBox1" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+            <asp:TextBox ID="TextBox1" runat="server" ReadOnly="True" TextMode="MultiLine" Width="315px"></asp:TextBox>
         </p>
-        <asp:TextBox ID="TextBox2" runat="server" ReadOnly="True" TextMode="MultiLine"></asp:TextBox>
+        <asp:TextBox ID="TextBox2" runat="server" ReadOnly="True" TextMode="MultiLine" Width="315px"></asp:TextBox>
     </form>
     
 </body>

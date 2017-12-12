@@ -40,24 +40,6 @@ namespace SearchEngine {
         protected global::System.Web.UI.WebControls.TextBox KelimeText;
         
         /// <summary>
-        /// btn_urlEkle denetimi.
-        /// </summary>
-        /// <remarks>
-        /// Otomatik üretilmiş alan.
-        /// Değiştirmek için, alan bildirimini tasarımcı dosyasından arka plan kod dosyasına taşıyın.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_urlEkle;
-        
-        /// <summary>
-        /// button_kelimeEkle denetimi.
-        /// </summary>
-        /// <remarks>
-        /// Otomatik üretilmiş alan.
-        /// Değiştirmek için, alan bildirimini tasarımcı dosyasından arka plan kod dosyasına taşıyın.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button button_kelimeEkle;
-        
-        /// <summary>
         /// btn_UrlSırala denetimi.
         /// </summary>
         /// <remarks>
@@ -65,6 +47,15 @@ namespace SearchEngine {
         /// Değiştirmek için, alan bildirimini tasarımcı dosyasından arka plan kod dosyasına taşıyın.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_UrlSırala;
+        
+        /// <summary>
+        /// btn_UrlSırala0 denetimi.
+        /// </summary>
+        /// <remarks>
+        /// Otomatik üretilmiş alan.
+        /// Değiştirmek için, alan bildirimini tasarımcı dosyasından arka plan kod dosyasına taşıyın.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_UrlSırala0;
         
         /// <summary>
         /// TextBox1 denetimi.

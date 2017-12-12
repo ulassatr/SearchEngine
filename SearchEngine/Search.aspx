@@ -11,17 +11,25 @@
     <form id="form1" runat="server">
         <div style="height: 81px">
 
-            <asp:TextBox ID="UrlText" runat="server" Width="194px"></asp:TextBox>
-&nbsp;URL<br />
+            URL<br />
             <br />
-            <asp:TextBox ID="KeyText" runat="server" Width="193px"></asp:TextBox>
-&nbsp;Anahtar Kelime<br />
+
+            <asp:TextBox ID="UrlText" runat="server" Width="250px"></asp:TextBox>
+            &nbsp;<br />
             <br />
-            <asp:Button ID="SearchButton" runat="server" Text="Ara" OnClick="SearchButton_Click" />
+            Anahtar Kelime<br />
+            <br />
+            <asp:TextBox ID="KeyText" runat="server" Width="250px"></asp:TextBox>
+            &nbsp;<br />
+            <br />
+            <asp:Button ID="SearchButton" runat="server" Text="Ara" OnClick="SearchButton_Click" Width="67px" />
+
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <asp:Button ID="SearchButton0" runat="server" Text="Ana Sayfaya Dön" OnClick="SearchButton1_Click" Width="141px" />
 
             <br />
             <br />
-            <asp:TextBox ID="text_goruntule" runat="server" ReadOnly="True" TextMode="MultiLine" Width="253px"></asp:TextBox>
+            <asp:TextBox ID="text_goruntule" runat="server" ReadOnly="True" TextMode="MultiLine" Width="250px"></asp:TextBox>
 
         </div>
     </form>

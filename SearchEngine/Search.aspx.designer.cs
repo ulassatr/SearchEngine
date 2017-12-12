@@ -49,6 +49,15 @@ namespace SearchEngine {
         protected global::System.Web.UI.WebControls.Button SearchButton;
         
         /// <summary>
+        /// SearchButton0 denetimi.
+        /// </summary>
+        /// <remarks>
+        /// Otomatik üretilmiş alan.
+        /// Değiştirmek için, alan bildirimini tasarımcı dosyasından arka plan kod dosyasına taşıyın.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button SearchButton0;
+        
+        /// <summary>
         /// text_goruntule denetimi.
         /// </summary>
         /// <remarks>

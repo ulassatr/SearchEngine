@@ -112,9 +112,6 @@
     <Compile Include="TagsFolder\ahref.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="TagsFolder\Big.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="TagsFolder\Bold.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
@@ -161,9 +158,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TagsFolder\Option.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TagsFolder\p.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="TagsFolder\Span.cs">

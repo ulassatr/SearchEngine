@@ -13,7 +13,7 @@ namespace SearchEngine
     {
         public List<string> url_list = new List<string>();
         public List<string> kelime_list = new List<string>();
-      
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -45,16 +45,16 @@ namespace SearchEngine
 
             }
 
-            List<string> linkListesi = new List<string>();
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             List<string> ikinciListe = new List<string>();
-            
 
+            //İlk derinliğe iniyoruz.
             for (int j = 0; j < url_list.Count; j++)
             {
                 liste.AddRange(altDerinligeIn(hrefDonduren(url_list, j), j, url_list));
             }
+            //Ana urllerle ilk derinlikte çakışan urlleri temizliyoruz.
             for (int i = 0; i < url_list.Count; i++)
             {
                 for (int j = 0; j < liste.Count; j++)
@@ -65,11 +65,13 @@ namespace SearchEngine
                     }
                 }
             }
+            //İkinci derinliğe iniyoruz
             for (int z = 0; z < liste.Count; z++)
             {
                 ikinciListe.AddRange(altDerinligeIn(hrefDonduren(liste, z), z, liste));
 
             }
+            //İlk derinliteki urllerle ikinci derinlikte çakışan urlleri temizliyoruz.
             for (int i = 0; i < liste.Count; i++)
             {
                 for (int j = 0; j < ikinciListe.Count; j++)
@@ -85,8 +87,8 @@ namespace SearchEngine
             List<double> anaURL = puanHesapla(url_list);
             List<double> derinlik1 = puanHesapla(liste);
             List<double> derinlik2 = puanHesapla(ikinciListe);
-                
 
+            //Her link için puanlar ekrana yazdırılıyor.
             for (int i = 0; i < anaURL.Count; i++)
             {
                 sonuc.Add(url_list[i]);
@@ -118,13 +120,11 @@ namespace SearchEngine
             }
             sonuc.Clear();
 
-            //for (int i = 0; i < kelime_list.Count; i++)
-            //{
-            //    Result.Add(kelime_list[i] + ":" + kelimeSayilari[i].ToString());
-            //}
             double toplam = 0;
+
             List<double> yeniListe = new List<double>();
             List<double> sonListe = new List<double>();
+            //Her derinlikteki ana urllere ait toplam puan listelere atılıyor.
             for (int j = 0; j < url_list.Count; j++)
             {
                 for (int i = 0; i < liste.Count; i++)
@@ -143,8 +143,10 @@ namespace SearchEngine
                 toplam = 0;
                 yeniListe.Clear();
             }
+
             List<double> yeniListe2 = new List<double>();
             List<double> sonListe2 = new List<double>();
+
             for (int j = 0; j < url_list.Count; j++)
             {
                 for (int i = 0; i < ikinciListe.Count; i++)
@@ -163,7 +165,7 @@ namespace SearchEngine
                 toplam = 0;
                 yeniListe2.Clear();
             }
-
+            //Toplam puanlar ekrana bastırılıyor.
             for (int j = 0; j < sonListe.Count; j++)
             {
                 sonuc.Add(url_list[j] + "sitesinin puanı: " + sonListe[j].ToString());
@@ -184,7 +186,7 @@ namespace SearchEngine
             }
             sonuc.Clear();
 
-
+#region Sıralama işlemleri
             List<string> siralama = new List<string>();
             for (int i = 0; i < url_list.Count; i++)
             {
@@ -204,6 +206,8 @@ namespace SearchEngine
             }
             url_list.Reverse();
             anaURL.Reverse();
+            siralama.Clear();
+            siralama.Add("Sıralanmıs Hali:");
             for (int i = 0; i < url_list.Count; i++)
             {
                 siralama.Add(url_list[i]);
@@ -213,7 +217,12 @@ namespace SearchEngine
             {
                 TextBox3.Text = TextBox3.Text + siralama[c] + Environment.NewLine;
             }
+            url_list.Clear();
+            for (int i = 0; i < url_kumesi.Count(); i++)
+            {
+                url_list.Add(url_kumesi[i]);
 
+            }
             for (int i = 0; i < url_list.Count; i++)
             {
                 for (int j = 1; j < url_list.Count - i; j++)
@@ -230,7 +239,7 @@ namespace SearchEngine
                 }
 
             }
-            //url_list.Reverse();
+            url_list.Reverse();
             sonListe.Reverse();
             siralama.Clear();
             siralama.Add("Sıralanmıs Hali:");
@@ -242,6 +251,12 @@ namespace SearchEngine
             for (int c = 0; c < siralama.Count; c++)
             {
                 TextBox4.Text = TextBox4.Text + siralama[c] + Environment.NewLine;
+            }
+            url_list.Clear();
+            for (int i = 0; i < url_kumesi.Count(); i++)
+            {
+                url_list.Add(url_kumesi[i]);
+
             }
             for (int i = 0; i < url_list.Count; i++)
             {
@@ -259,7 +274,7 @@ namespace SearchEngine
                 }
 
             }
-            //   url_list.Reverse();
+            url_list.Reverse();
             sonListe2.Reverse();
             siralama.Clear();
             siralama.Add("Sıralanmıs Hali:");
@@ -272,7 +287,7 @@ namespace SearchEngine
             {
                 TextBox5.Text = TextBox5.Text + siralama[c] + Environment.NewLine;
             }
-
+#endregion
         }
 
         public List<string> hrefDonduren(List<string> url_list, int j)
@@ -282,48 +297,43 @@ namespace SearchEngine
             Htmlİslemleri Cek_veri = new Htmlİslemleri();
             List<string> liste = new List<string>();
             //Url listesi kadar htmllerini çekiyoruz
-
+//Siteye ulaşılıp ulaşılmadığı kontrol edılıyor.
             try
             {
                 htmlstring = Cek_veri.GetVeri(url_list[j]);
                 HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
                 htmldoc.LoadHtml(htmlstring);
-
+                //Html de a href taglerini buluyoruz.
                 if (htmldoc.DocumentNode.SelectNodes("//a[@href]") != null)
                 {
 
                     foreach (HtmlNode link in htmldoc.DocumentNode.SelectNodes("//a[@href]"))
                     {
-
-
                         HtmlAttribute att = link.Attributes["href"];
                         hrefTags.Add(att.Value); //linklerimizi alıyoruz
+                        //Yavaş olmasın diye hreflere sınır koyduk.
                         if (hrefTags.Count == 200)
                         {
                             return hrefTags;
                         }
-
                     }
                 }
-
             }
-
-            catch (Exception ex)
+            //Ulaşılamayan url listeden kaldırılıyor.
+            catch (Exception)
             {
-
                 url_list.RemoveAt(j);
-                //throw;
             }
-
-
-
             return hrefTags;
         }
+
         public List<string> altDerinligeIn(List<string> hrefTags, int k, List<string> url_list)
         {
             HashSet<string> essizLinkler = new HashSet<string>();
             List<string> dogruLinkler = new List<string>();
             List<bool> deneme = new List<bool>();
+            //Jpeg,gif,doc,pdf türündeki tagler listeden kaldırılsın.
+
             for (int c = 0; c < hrefTags.Count; c++)
             {
                 if (hrefTags[c].IndexOf(".pdf") != -1 || hrefTags[c].IndexOf(".doc") != -1 || hrefTags[c].IndexOf(".jpeg") != -1 || hrefTags[c].IndexOf(".gif") != -1)
@@ -331,6 +341,7 @@ namespace SearchEngine
                     hrefTags.RemoveAt(c);
                 }
             }
+            //Url'imiz ile başlayan href tagleri listeye ekliyoruz.
             for (int i = 0; i < hrefTags.Count; i++)
             {
                 deneme.Add(hrefTags[i].StartsWith(url_list[k]));
@@ -344,21 +355,24 @@ namespace SearchEngine
 
                 }
             }
+            //Son linklerimizden aynı olanlardan kurtuluyoruz.
             for (int i = 0; i < dogruLinkler.Count; i++)
             {
                 essizLinkler.Add(dogruLinkler[i]);
 
             }
+
             for (int i = 0; i < essizLinkler.Count; i++)
             {
                 dogruLinkler = essizLinkler.ToList();
             }
+
             return dogruLinkler;
         }
-       
+
         public List<double> puanHesapla(List<string> url_list)
         {
-            #region tanımlamalar
+#region tanımlamalar
             Title title = new Title();
             ahref a = new ahref();
             List<int> list = new List<int>();
@@ -398,7 +412,6 @@ namespace SearchEngine
             Link link = new Link();
             Span span = new Span();
             Strong strong = new Strong();
-            Big big = new Big();
             Bold bold = new Bold();
             Em em = new Em();
             Li li = new Li();
@@ -424,7 +437,7 @@ namespace SearchEngine
                 htmlstring = Cek_veri.GetVeri(url_list[j]);
                 HtmlAgilityPack.HtmlDocument htmldoc = new HtmlAgilityPack.HtmlDocument();
                 htmldoc.LoadHtml(htmlstring);
-                #region etiketPuanlama
+#region etiketPuanlama
                 title_Puan = title.sıralamaPuan(url_list, kelime_list, Cek_veri, title.etiket, title.puan, htmldoc);
                 ahref_Puan = ahref.sıralamaPuan(url_list, kelime_list, Cek_veri, ahref.etiket, ahref.puan, htmldoc);
                 h1_Puan = h1.sıralamaPuan(url_list, kelime_list, Cek_veri, h1.etiket, h1.puan, htmldoc);
@@ -544,8 +557,8 @@ namespace SearchEngine
                 }
             }
             return URLpuan;
-
         }
+
         public double ortalama(List<int> dizi) // Ortalama
         {
             int toplam = 0;
@@ -567,10 +580,13 @@ namespace SearchEngine
                     return 100;
                 }
             }
-            
+
             return Math.Sqrt(toplam / (dizi.Count - 1));
         }
 
-
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("AnaSayfa.aspx");
+        }
     }
 }
